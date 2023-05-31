@@ -30,15 +30,18 @@ export class LoginFormComponent {
     if (this.form.valid) {
       this.status = 'loading';
       const { email, password } = this.form.getRawValue();
-      this.router.navigate(['/app'])
-      // this.serviceauth.login(email, password)
-      // .subscribe(resp=>{
-      //   this.status='succes';
-      //   this.router.navigate(['/app']);
-      // }, error=>console.log(error))      
+       this.serviceauth.login(email, password).subscribe(res=>{
+        this.status='succes';
+         this.router.navigate(['/app']);
+       },()=>{
+        this.status='failed';
+       })
+           
     } else {
       this.form.markAllAsTouched();
     }
   }
+
+  
 
 }

@@ -9,9 +9,15 @@ export class AuthService {
   api=environment.API_URL;
   constructor(private http:HttpClient) { }
 
-  login(email:string, contrsena:string){
+  login(email:string, password:string){
     return this.http.post(`${this.api}/api/v1/auth/login`, 
-    {email, contrsena}
+    {email, password}
     );
+  }
+
+  register(email:string, password:string, name:string){
+    return this.http.post(`${this.api}/api/v1/auth/register`, {
+      email, password, name
+    })
   }
 }

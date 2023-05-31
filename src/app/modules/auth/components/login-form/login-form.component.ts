@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { faPen, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-login-form',
@@ -11,7 +12,7 @@ export class LoginFormComponent {
 
   form = this.formBuilder.nonNullable.group({
     email: ['', [Validators.email, Validators.required]],
-    password: ['', [ Validators.required, Validators.minLength(6)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
   faPen = faPen;
   faEye = faEye;
@@ -21,14 +22,20 @@ export class LoginFormComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private serviceauth: AuthService
   ) { }
 
   doLogin() {
     if (this.form.valid) {
       this.status = 'loading';
       const { email, password } = this.form.getRawValue();
-      // TODO
+      this.router.navigate(['/app'])
+      // this.serviceauth.login(email, password)
+      // .subscribe(resp=>{
+      //   this.status='succes';
+      //   this.router.navigate(['/app']);
+      // }, error=>console.log(error))      
     } else {
       this.form.markAllAsTouched();
     }
